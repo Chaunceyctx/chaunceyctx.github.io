@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-21 19:18:03 / 修改时间：20:10:04" itemprop="dateCreated datePublished" datetime="2022-02-21T19:18:03+08:00">2022-02-21</time>
+              <time title="创建时间：2022-02-21 19:18:03 / 修改时间：20:45:29" itemprop="dateCreated datePublished" datetime="2022-02-21T19:18:03+08:00">2022-02-21</time>
             </span>
 
           
@@ -199,23 +199,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li><p>进程</p>
-<p>进程(Process)可以理解成运行时的或者动态的程序(Program)。一动一静。</p>
+          <h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>进程(Process)可以理解成运行时的或者动态的程序(Program)。一动一静。</p>
 <blockquote>
-<p>从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。</p>
+<p><em>从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。</em></p>
 <blockquote>
-<p>PC寄存器只是计算机技术中的概念，而在实现层面上，Intel的CPU中使用CS寄存器(Code Segment，内存代码段区域的入口地址(段基址))和IP寄存器(Instruction Pointer)来指示下一条被执行的指令地址</p>
+<p><em>PC寄存器只是计算机技术中的概念，而在实现层面上，Intel的CPU使用CS寄存器(Code Segment，内存代码段区域的入口地址(段基址))和IP寄存器(Instruction Pointer)来指示下一条被执行的指令地址</em></p>
 </blockquote>
 </blockquote>
-<p>初始的操作系统还是粗粒度，将一个任务作为一个进程。进程既是资源分配的单位，又是任务调度的单位。但由于并发度低、进程切换开销大等问题，操作系统引入线程概念，**<u>将资源分配与任务调度的单位拆分开</u>**，解决了上述问题。</p>
+<p>初始的操作系统还是粗粒度，将一个任务作为一个进程。进程既是资源分配的单位，又是任务调度的单位。但由于并发度低、进程切换开销大等问题，操作系统引入线程，<strong>将资源分配与任务调度的单位拆分开</strong>，解决了上述问题。</p>
 <blockquote>
-<p>并发度低：例如web服务端的处理进程，可以拆分成多个接收请求的线程和处理请求的线程，提升并发度</p>
-<p>进程切换：进程切换会引起上下文切换(Context Switch)，其具体的切换内容涉及进程相关数据，后续说明</p>
+<p><em>并发度低：例如web服务端的处理进程，可以拆分成多个接收请求的线程和处理请求的线程，提升并发度</em></p>
+<p><em>进程切换：进程切换会引起上下文切换(Context Switch)，其具体的切换内容涉及进程相关数据，后续说明</em></p>
 </blockquote>
 <p>所以引入线程后，进程将作为资源分配的单位，</p>
-</li>
-</ul>
 
       
     </div>
