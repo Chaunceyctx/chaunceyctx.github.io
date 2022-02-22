@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-22 11:50:48" itemprop="dateModified" datetime="2022-02-22T11:50:48+08:00">2022-02-22</time>
+                <time title="修改时间：2022-02-22 11:59:44" itemprop="dateModified" datetime="2022-02-22T11:59:44+08:00">2022-02-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,7 +217,7 @@
           <h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><ul>
 <li>进程与线程的概念</li>
 </ul>
-<p>​       进程(<em>Process</em>)可以理解成运行时的或者动态的程序(<em>Program</em>)。一动一静。</p>
+<p>进程(<em>Process</em>)可以理解成运行时的或者动态的程序(<em>Program</em>)。一动一静。</p>
 <blockquote>
 <p><em>从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。</em></p>
 <blockquote>
@@ -270,7 +270,7 @@
 </ul>
 <h3 id="内核态与用户态"><a href="#内核态与用户态" class="headerlink" title="内核态与用户态"></a>内核态与用户态</h3><ul>
 <li><p>为什么要设定？</p>
-<p>​        <em>Intel</em>的<em>CPU</em>包含四种<strong>模式</strong>：<em>Ring0-3</em>，其中<em>CPU</em>在<em>Ring-0</em>模式下权限最高，能执行所有指令，访问任何地址。<em>Ring-3</em>权限最低，执行与访问受限。出于对系统运行的安全性考虑，<em>Linux</em>系统根据两种运行模式设计出两种不同的操作系统<strong>状态</strong>。0对应内核态；3对应用户态。避免让运行在用户态下的进程修改操作系统核心数据。</p>
+<p><em>Intel</em>的<em>CPU</em>包含四种<strong>模式</strong>：<em>Ring0-3</em>，其中<em>CPU</em>在<em>Ring-0</em>模式下权限最高，能执行所有指令，访问任何地址。<em>Ring-3</em>权限最低，执行与访问受限。出于对系统运行的安全性考虑，<em>Linux</em>系统根据两种运行模式设计出两种不同的操作系统<strong>状态</strong>。0对应内核态；3对应用户态。避免让运行在用户态下的进程修改操作系统核心数据。</p>
 </li>
 <li><p>两者的转换</p>
 <ul>
@@ -310,7 +310,7 @@
 </ul>
 <h3 id="映射模式-时间线从前往后"><a href="#映射模式-时间线从前往后" class="headerlink" title="映射模式(时间线从前往后)"></a>映射模式(时间线从前往后)</h3><ul>
 <li><p><em>N:1</em> (<strong>N</strong>个用户线程对应<strong>1</strong>个内核线程)</p>
-<p>​        这个模式其实就对应仅有用户线程的操作系统或者没有实现线程的操作系统。这些操作系统中的进程相当于单内核线程的进程。</p>
+<p>这个模式其实就对应仅有用户线程的操作系统或者没有实现线程的操作系统。这些操作系统中的进程相当于单内核线程的进程。</p>
 <img src=/images/ProcessAndThread/image-20220221134408514.png width=700 height=500 />
 
 <ul>

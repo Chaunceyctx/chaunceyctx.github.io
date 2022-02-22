@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="进程与线程 进程与线程的概念  ​       进程(Process)可以理解成运行时的或者动态的程序(Program)。一动一静。  从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。  PC寄存器只是计算机技术中的概念，而在实现层面上，Intel的CP">
+  <meta name="description" content="进程与线程 进程与线程的概念  进程(Process)可以理解成运行时的或者动态的程序(Program)。一动一静。  从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。  PC寄存器只是计算机技术中的概念，而在实现层面上，Intel的CPU使用CS寄存器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="进程与线程">
 <meta property="og:url" content="http://example.com/2022/02/21/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="民工日常">
-<meta property="og:description" content="进程与线程 进程与线程的概念  ​       进程(Process)可以理解成运行时的或者动态的程序(Program)。一动一静。  从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。  PC寄存器只是计算机技术中的概念，而在实现层面上，Intel的CP">
+<meta property="og:description" content="进程与线程 进程与线程的概念  进程(Process)可以理解成运行时的或者动态的程序(Program)。一动一静。  从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。  PC寄存器只是计算机技术中的概念，而在实现层面上，Intel的CPU使用CS寄存器">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/ProcessAndThread/image-20220222093346148.png">
 <meta property="og:image" content="http://example.com/images/ProcessAndThread/978007-20170208113706760-1208301174.png">
 <meta property="og:image" content="http://example.com/images/ProcessAndThread/image-20220222101332154.png">
 <meta property="article:published_time" content="2022-02-21T11:18:03.000Z">
-<meta property="article:modified_time" content="2022-02-22T03:50:48.151Z">
+<meta property="article:modified_time" content="2022-02-22T03:59:44.136Z">
 <meta property="article:author" content="互联网搬砖民工">
 <meta property="article:tag" content="进程">
 <meta property="article:tag" content="线程">
@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-22 11:50:48" itemprop="dateModified" datetime="2022-02-22T11:50:48+08:00">2022-02-22</time>
+                <time title="修改时间：2022-02-22 11:59:44" itemprop="dateModified" datetime="2022-02-22T11:59:44+08:00">2022-02-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -227,7 +227,7 @@
         <h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><ul>
 <li>进程与线程的概念</li>
 </ul>
-<p>​       进程(<em>Process</em>)可以理解成运行时的或者动态的程序(<em>Program</em>)。一动一静。</p>
+<p>进程(<em>Process</em>)可以理解成运行时的或者动态的程序(<em>Program</em>)。一动一静。</p>
 <blockquote>
 <p><em>从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。</em></p>
 <blockquote>
@@ -280,7 +280,7 @@
 </ul>
 <h3 id="内核态与用户态"><a href="#内核态与用户态" class="headerlink" title="内核态与用户态"></a>内核态与用户态</h3><ul>
 <li><p>为什么要设定？</p>
-<p>​        <em>Intel</em>的<em>CPU</em>包含四种<strong>模式</strong>：<em>Ring0-3</em>，其中<em>CPU</em>在<em>Ring-0</em>模式下权限最高，能执行所有指令，访问任何地址。<em>Ring-3</em>权限最低，执行与访问受限。出于对系统运行的安全性考虑，<em>Linux</em>系统根据两种运行模式设计出两种不同的操作系统<strong>状态</strong>。0对应内核态；3对应用户态。避免让运行在用户态下的进程修改操作系统核心数据。</p>
+<p><em>Intel</em>的<em>CPU</em>包含四种<strong>模式</strong>：<em>Ring0-3</em>，其中<em>CPU</em>在<em>Ring-0</em>模式下权限最高，能执行所有指令，访问任何地址。<em>Ring-3</em>权限最低，执行与访问受限。出于对系统运行的安全性考虑，<em>Linux</em>系统根据两种运行模式设计出两种不同的操作系统<strong>状态</strong>。0对应内核态；3对应用户态。避免让运行在用户态下的进程修改操作系统核心数据。</p>
 </li>
 <li><p>两者的转换</p>
 <ul>
@@ -320,7 +320,7 @@
 </ul>
 <h3 id="映射模式-时间线从前往后"><a href="#映射模式-时间线从前往后" class="headerlink" title="映射模式(时间线从前往后)"></a>映射模式(时间线从前往后)</h3><ul>
 <li><p><em>N:1</em> (<strong>N</strong>个用户线程对应<strong>1</strong>个内核线程)</p>
-<p>​        这个模式其实就对应仅有用户线程的操作系统或者没有实现线程的操作系统。这些操作系统中的进程相当于单内核线程的进程。</p>
+<p>这个模式其实就对应仅有用户线程的操作系统或者没有实现线程的操作系统。这些操作系统中的进程相当于单内核线程的进程。</p>
 <img src=/images/ProcessAndThread/image-20220221134408514.png width=700 height=500 />
 
 <ul>
