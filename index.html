@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-22 16:49:57" itemprop="dateModified" datetime="2022-02-22T16:49:57+08:00">2022-02-22</time>
+                <time title="修改时间：2022-02-22 20:08:02" itemprop="dateModified" datetime="2022-02-22T20:08:02+08:00">2022-02-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,13 +208,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>4.9k</span>
+              <span>5.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -320,7 +320,8 @@
 </blockquote>
 </li>
 </ul>
-<h3 id="映射模式-时间线从前往后"><a href="#映射模式-时间线从前往后" class="headerlink" title="映射模式(时间线从前往后)"></a>映射模式(时间线从前往后)</h3><ul>
+<h3 id="映射模式"><a href="#映射模式" class="headerlink" title="映射模式"></a>映射模式</h3><p>按照时间线从前往后，这些模式为N:1, 1:1, M:N。首先是N:1。Linux 2.4之前是不存在线程（只有进程，可以理解为内核线程）这一概念即不支持线程，但是线程有自身的好处。所以Linux为了支持线程，引入线程库来创建用户线程。也就是在进程中，用户能通过线程库创建出多个用户线程。使用这些用户线程可以共享变量、以及下述N:1模式的优点。但是这样创建的多个用户线程实际使用的还只是单个内核线程，会出现阻塞引起多核浪费等问题。随后Linux 2.6开始进一步改进，改进成用户调用线程库例如<em>pthread</em>创建的一个线程，会对应地在内核创建一个内核线程，这就是所谓的1:1模型。Linux上运行的<em>HotSpot</em>虚拟机创建线程时，底层使用的就是pthread线程库，所以会对应地创建一个内核线程。但是1:1也有缺点，因此出现M:N模式。</p>
+<ul>
 <li><p><em>N:1</em> (<strong>N</strong>个用户线程对应<strong>1</strong>个内核线程)</p>
 <p>这个模式其实就对应仅有用户线程的操作系统或者没有实现线程的操作系统。</p>
 <img src=/images/ProcessAndThread/image-20220221134408514.png width=700 height=500 />
@@ -361,7 +362,7 @@
 <hr>
 <h3 id="Linux-Kernel-2-6-34-Process-amp-Thread-部分"><a href="#Linux-Kernel-2-6-34-Process-amp-Thread-部分" class="headerlink" title="Linux Kernel 2.6.34 Process &amp; Thread(部分)"></a>Linux Kernel 2.6.34 Process &amp; Thread(部分)</h3><ul>
 <li><p>进程与线程的实现</p>
-<p><em>Linux</em>中既不对线程进行单独实现，也不对进程进行单独实现，而是统一使用任务(<em>Task</em>)或者轻量级进程(<em>Light-Weighted Process</em>)来表示。对于线程和进程所对应的<em>TCB</em>与<em>PCB</em>，底层使用<em>task_struct</em>结构体来实现。如果真要细分，Linux下的说法就分成：<strong>内核线程</strong>、<strong>用户线程</strong>、<strong>用户进程</strong>三种，再无其他。</p>
+<p>Linux中既不对线程进行单独实现，也不对进程进行单独实现，而是统一使用任务(<em>Task</em>)或者轻量级进程(<em>Light-Weighted Process</em>)来表示。对于线程和进程所对应的<em>TCB</em>与<em>PCB</em>，底层使用<em>task_struct</em>结构体来实现。如果真要细分，Linux下的说法就分成：<strong>内核线程</strong>、<strong>用户线程</strong>、<strong>用户进程</strong>三种，再无其他。</p>
 <p>本文重点关注<em>task_struct</em>中这几个部分：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> &#123;</span></span><br><span class="line">    <span class="type">pid_t</span> pid; <span class="comment">// process id</span></span><br><span class="line">    <span class="type">pid_t</span> tgid; <span class="comment">// thread group id</span></span><br><span class="line">    <span class="type">void</span> *<span class="built_in">stack</span>; <span class="comment">// point to kernel stack</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> *<span class="title">mm</span>;</span> <span class="comment">//point to memory descriptor</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -416,6 +417,7 @@
 </li>
 </ul>
 <h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/35128513">https://www.zhihu.com/question/35128513</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/382026682">https://zhuanlan.zhihu.com/p/382026682</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/308641794">https://www.zhihu.com/question/308641794</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/why-must-user-threads-be-mapped-to-a-kernel-thread/">https://www.geeksforgeeks.org/why-must-user-threads-be-mapped-to-a-kernel-thread/</a></li>
@@ -557,7 +559,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4 分钟</span>
+    <span title="站点阅读时长">5 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
