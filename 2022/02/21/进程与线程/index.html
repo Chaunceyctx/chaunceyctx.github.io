@@ -27,12 +27,16 @@
 <meta property="og:site_name" content="民工日常">
 <meta property="og:description" content="进程与线程 进程与线程的概念  ​       进程(Process)可以理解成运行时的或者动态的程序(Program)。一动一静。  从底层上看，CPU只知道按照CS:IP寄存器指示的指令去执行，根本没有进程、线程的概念。CPU一会执行任务A的指令1，一会执行任务B的指令2。是谁导致这种现象？Operating System。  PC寄存器只是计算机技术中的概念，而在实现层面上，Intel的CP">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/ProcessAndThread/image-20220222093346148.png">
+<meta property="og:image" content="http://example.com/images/ProcessAndThread/978007-20170208113706760-1208301174.png">
+<meta property="og:image" content="http://example.com/images/ProcessAndThread/image-20220222101332154.png">
 <meta property="article:published_time" content="2022-02-21T11:18:03.000Z">
-<meta property="article:modified_time" content="2022-02-21T17:10:11.215Z">
+<meta property="article:modified_time" content="2022-02-22T03:46:22.664Z">
 <meta property="article:author" content="互联网搬砖民工">
 <meta property="article:tag" content="进程">
 <meta property="article:tag" content="线程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/ProcessAndThread/image-20220222093346148.png">
 
 <link rel="canonical" href="http://example.com/2022/02/21/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">
 
@@ -197,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-22 01:10:11" itemprop="dateModified" datetime="2022-02-22T01:10:11+08:00">2022-02-22</time>
+                <time title="修改时间：2022-02-22 11:46:22" itemprop="dateModified" datetime="2022-02-22T11:46:22+08:00">2022-02-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,7 +251,7 @@
 </li>
 </ul>
 <blockquote>
-<p>  <em>注意：以上数据占用的是<u>用户空间</u>，因此，此处的线程指的是用户线程，而非内核线程。内核线程使用的反而是<u>内核空间</u>（<del>因为线程无法单独存在，所以具体包含在哪个进程中？理论上是这样，但是实现上又如何？</del>），同时进程所对应的PCB(Process Control Block)使用的也是内核空间。对此，《现代操作系统》中给出了一幅图，清楚地解释了存储位置。</em></p>
+<p>  <em>注意：以上数据占用的是<u>用户空间</u>，因此，此处的线程指的是用户线程，而非内核线程。内核线程使用的反而是<u>内核空间</u>，同时进程所对应的PCB(Process Control Block)使用的也是内核空间。对此，《现代操作系统》中给出了一幅图，清楚地解释了存储位置。</em></p>
 <img src=/images/ProcessAndThread/image-20220221213651292.png width=700 height=400 />
 
 <p>​        <em>a图表示的是仅有用户线程，没有内核线程的操作系统。每个用户线程在线程表中都有对应的表项，表项存储着线程id、线程状态、寄存器、堆栈等信息。这个表项也有人称作为TCB(Thread Control Block)。反正可以看出，线程表存在于进程存储空间中，占用用户空间。而对应的每个进程在进程表中都有对应的表项，表项存储着进程id、进程状态、寄存器、<strong>段页表</strong>等信息。这个表项就是常说的PCB。可以看出，<strong>进程表始终占用内核空间</strong>。</em></p>
@@ -280,7 +284,7 @@
 </li>
 <li><p>两者的转换</p>
 <ul>
-<li>用户态切换到内核态（必然出现进程的切换）<ol>
+<li>用户态切换到内核态（引起<em>Context Switch</em>）<ol>
 <li>系统调用</li>
 <li>中断<ol>
 <li>硬中断(<em>I&#x2F;O</em>设备，定时器)</li>
@@ -296,7 +300,7 @@
 </ul>
 <h3 id="用户线程与内核线程-最令人困惑的！"><a href="#用户线程与内核线程-最令人困惑的！" class="headerlink" title="用户线程与内核线程(最令人困惑的！)"></a>用户线程与内核线程(最令人困惑的！)</h3><ul>
 <li><p>用户空间与内核空间</p>
-<p>由于用户态和内核态的出现，主存空间(<em>Vitual Memory</em>)自然划分成对应的用户空间和内核空间。[<em>0 - 3G |  4G</em>]。</p>
+<p>由于用户态和内核态的出现，主存空间(<em>Virtual Memory Area, VMA</em>)自然划分成对应的用户空间和内核空间。32位的<em>CPU</em>寻址空间 —&gt; [<em>0 - 3G |  4G</em>]。</p>
 <p>不同空间存储不同的数据，有不同的作用。</p>
 </li>
 <li><p>用户线程与内核线程</p>
@@ -315,7 +319,7 @@
 </li>
 </ul>
 <h3 id="映射模式-时间线从前往后"><a href="#映射模式-时间线从前往后" class="headerlink" title="映射模式(时间线从前往后)"></a>映射模式(时间线从前往后)</h3><ul>
-<li><p>N:1 (<strong>N</strong>个用户线程对应<strong>1</strong>个内核线程)</p>
+<li><p><em>N:1</em> (<strong>N</strong>个用户线程对应<strong>1</strong>个内核线程)</p>
 <p>​        这个模式其实就对应仅有用户线程的操作系统或者没有实现线程的操作系统。这些操作系统中的进程相当于单内核线程的进程。</p>
 <img src=/images/ProcessAndThread/image-20220221134408514.png width=700 height=500 />
 
@@ -326,8 +330,8 @@
 </li>
 </ul>
 </li>
-<li><p>N:1 (<strong>1</strong>个用户线程对应<strong>1</strong>个内核线程，Linux实现方式)</p>
-<img src=/images/ProcessAndThread/image-20220221140042486.png width=750 height=500 />
+<li><p><em>1:1</em> (<strong>1</strong>个用户线程对应<strong>1</strong>个内核线程，Linux的实现方式)</p>
+<img src=/images/ProcessAndThread/image-20220221140042486.png width=700 height=500 />
 
 <ul>
 <li><p>优点：进程包含多少个用户线程，就可以使用多少个核。某个用户线程阻塞不会影响其他其他用户线程。解决N:1的阻塞问题，<strong>充分利用多核资源提升进程并发度</strong></p>
@@ -336,36 +340,73 @@
 </li>
 </ul>
 </li>
-<li><p>M:N(<strong>M</strong>个用户线程对应<strong>N</strong>个内核线程)</p>
-<img src=/images/ProcessAndThread/image-20220221140651059.png width=750 height=480 />
+<li><p><em>M:N</em>(<strong>M</strong>个用户线程对应<strong>N</strong>个内核线程)</p>
+<img src=/images/ProcessAndThread/image-20220221140651059.png width=700 height=500 />
 
 <ul>
-<li>优点：综合了N:1模式与1:1模式的优点</li>
+<li>优点：综合了<em>N:1</em>模式与<em>1:1</em>模式的优点</li>
 <li>缺点：调度算法复杂，同时可能存在用户线程切换导致内核线程切换的情况</li>
 </ul>
 </li>
 </ul>
-<p>​             到此为止，上述都是理论知识。实际的实现会与上述有出入！</p>
+<p>到此为止，上述都是理论知识。实际的实现会与上述有出入！</p>
 <hr>
-<h3 id="Linux-Kernel-2-6-34-Process-amp-Thread"><a href="#Linux-Kernel-2-6-34-Process-amp-Thread" class="headerlink" title="Linux Kernel 2.6.34 Process &amp; Thread"></a>Linux Kernel 2.6.34 Process &amp; Thread</h3><ul>
+<h3 id="Linux-Kernel-2-6-34-Process-amp-Thread-部分"><a href="#Linux-Kernel-2-6-34-Process-amp-Thread-部分" class="headerlink" title="Linux Kernel 2.6.34 Process &amp; Thread(部分)"></a>Linux Kernel 2.6.34 Process &amp; Thread(部分)</h3><ul>
 <li><p>进程与线程的实现</p>
-<p>​       <em>Linux</em>中既没有线程的概念，也没有进程的概念，而是使用任务(<em>Task</em>)或者轻量级进程(Light-Weighted Process)来表述。对于线程和进程所对应的<em>TCB</em>与<em>PCB</em>，底层使用<em>task_struct</em>结构体来实现。</p>
-<p>​        本文重点关注task_struct中这几个部分：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> &#123;</span></span><br><span class="line">    <span class="type">pid_t</span> pid; <span class="comment">// process id</span></span><br><span class="line">    <span class="type">pid_t</span> tgid; <span class="comment">// thread group id</span></span><br><span class="line">    <span class="type">void</span> *<span class="built_in">stack</span>; <span class="comment">// point to kernel stack</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> *<span class="title">mm</span> // <span class="title">point</span> <span class="title">to</span> <span class="title">memory</span> <span class="title">descriptor</span></span></span><br><span class="line"><span class="class">&#125;;</span></span><br></pre></td></tr></table></figure>
+<p>​       <em>Linux</em>中既不对线程进行单独实现，也不对进程进行单独实现，而是统一使用任务(<em>Task</em>)或者轻量级进程(Light-Weighted Process)来表示。对于线程和进程所对应的<em>TCB</em>与<em>PCB</em>，底层使用<em>task_struct</em>结构体来实现。</p>
+<p>​        本文重点关注<em>task_struct</em>中这几个部分：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> &#123;</span></span><br><span class="line">    <span class="type">pid_t</span> pid; <span class="comment">// process id</span></span><br><span class="line">    <span class="type">pid_t</span> tgid; <span class="comment">// thread group id</span></span><br><span class="line">    <span class="type">void</span> *<span class="built_in">stack</span>; <span class="comment">// point to kernel stack</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> *<span class="title">mm</span>;</span> <span class="comment">//point to memory descriptor</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>​        Linux如何使用任务或者<em>LWP</em>来区别进程与线程？</p>
 <ol>
 <li><p><em>pid</em>与<em>tgid</em></p>
-<p><em>tgid</em>相同，<em>pid</em>不同的任务表示同一个进程中不同的线程。如果<em>tgid</em>不同，那任务必然是不同进程中的不同线程。</p>
+<p><em>tgid</em>相同，<em>pid</em>不同的任务表示同一个进程中不同的线程，同时该tgid就是进程的<em>pid</em>。如果<em>tgid</em>不同，那任务必然是不同进程中的不同线程。</p>
+<img src=/images/ProcessAndThread/image-20220220163523887.png width=500 height=300 />
+
+<p>其实每个进程最初就包含一个主线程，如<em>pid&#x3D;43</em>的进程。</p>
 </li>
-<li><p><em>mm_struct</em></p>
-<p>如果多个任务的<em>mm_struct</em>都指向相同的内存区域，那么说明这些任务共享相同的地址空间，即这些任务就是某个进程中的线程。</p>
+<li><p><em>mm</em></p>
+<p>如果多个任务的<em>mm</em>都指向相同的内存区域，那么说明<strong>这些任务共享相同的地址空间</strong>(<em>VMA</em>)，即这些任务就是某个进程中的线程。</p>
+<p><img src="/images/ProcessAndThread/image-20220222093346148.png" alt="image-20220222093346148"></p>
 </li>
 </ol>
 </li>
 <li><p>内存空间</p>
+<p>​        主要和<em>stack</em>指针、<em>mm</em>指针有关。<em>stack</em>指针会指向<em>kernel stack</em>区域，用来存放任务在内核态下运行所需的数据。不同任务，该值会不同。对于mm指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> &#123;</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> start_stack <span class="comment">// user stack start address</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><em>mm_struct</em>中的<em>start_stack</em>会指向<em>VMA</em>中的<em>user stack</em>的起始地址，存放任务在用户态下运行所需的数据。如果是只有主线程的进程，那么任务的<em>user stack</em>就是该区域。但是如果进程有多个线程，多个线程会共享该区域，但线程自己会独有<em>stack</em>和寄存器存储区域。因此，线程会在<em>heap</em>或者<em>mmap</em>区域另开一个<em>stack</em>作为线程的<em>user stack</em>。</p>
+<img src=/images/ProcessAndThread/1oslzJmGcRNHE0jRqTJLwFA.png width=600 height=300 />
+
+<p><img src="/images/ProcessAndThread/978007-20170208113706760-1208301174.png" alt="img"></p>
+<p><img src="/images/ProcessAndThread/image-20220222101332154.png" alt="image-20220222101332154"></p>
+<blockquote>
+<p>mmap技术就是将文件映射到内存空间多个页上。图中libc-2.15.so文件就被映射到多张物理页中。</p>
+</blockquote>
+<p>不管如何，最终<strong>每个任务都会有<em>user stack</em>和<em>kernel stack</em></strong>。</p>
+<ul>
+<li><em>user stack</em><ul>
+<li>建立在<em>VMA</em>中的<em>user space</em>，在用户态下使用</li>
+<li>对于主线程的进程，<em>user stack</em>存在于<em>VMA</em>的<em>stack</em>，对于线程，<em>user stack</em>存在于<em>VMA</em>的<em>heap&#x2F;mmap</em></li>
+</ul>
+</li>
+<li><em>kernel stack</em><ul>
+<li>建立在<em>VMA</em>中的<em>kernel space</em>，在内核态下使用</li>
+</ul>
 </li>
 </ul>
+<p>这两者的关系非常像用户线程与内核线程。<strong>因此Linux中用户线程与内核线程的对应关系是1:1</strong>。</p>
+<blockquote>
+<p><em>Linux</em>中的内核线程，mm&#x3D;NULL，表示不会使用用户空间。mm!&#x3D;NULL，则当前线程为用户线程</p>
+</blockquote>
+</li>
+<li><p>Context Switch（不对！做完操作系统实验后更新！）</p>
+</li>
+</ul>
+<p>​    内核态与用户态的互相转化就会涉及上下文切换。在<em>task_struct</em>中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">thread_struct</span> <span class="title">thread</span>;</span> <span class="comment">// 存放 context switch 相关数据</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">thread_struct</span> &#123;</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  sp0; <span class="comment">// 存放 kernel stack base address		unsigned long  sp;  // 存放 kernel stack (current)top address</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>对于1:1的对应模式中，用户线程切换时会引起内核线程的切换，导致操作系统从用户态切换到内核态。在切换期间，操作系统会把当前任务的<em>user stack</em>的数据存放到<em>kernel stack</em>中，在选择好下一个任务后，会将任务的sp与sp0的值赋值给<em>ESP</em>与<em>EBP</em>寄存器，之后将当前栈中</p>
 
     </div>
 
@@ -441,7 +482,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">进程与线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E6%80%81%E4%B8%8E%E7%94%A8%E6%88%B7%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">内核态与用户态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%86%85%E6%A0%B8%E7%BA%BF%E7%A8%8B-%E6%9C%80%E4%BB%A4%E4%BA%BA%E5%9B%B0%E6%83%91%E7%9A%84%EF%BC%81"><span class="nav-number">3.</span> <span class="nav-text">用户线程与内核线程(最令人困惑的！)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E6%A8%A1%E5%BC%8F-%E6%97%B6%E9%97%B4%E7%BA%BF%E4%BB%8E%E5%89%8D%E5%BE%80%E5%90%8E"><span class="nav-number">4.</span> <span class="nav-text">映射模式(时间线从前往后)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-Kernel-2-6-34-Process-amp-Thread"><span class="nav-number">5.</span> <span class="nav-text">Linux Kernel 2.6.34 Process &amp; Thread</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">进程与线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E6%80%81%E4%B8%8E%E7%94%A8%E6%88%B7%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">内核态与用户态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%86%85%E6%A0%B8%E7%BA%BF%E7%A8%8B-%E6%9C%80%E4%BB%A4%E4%BA%BA%E5%9B%B0%E6%83%91%E7%9A%84%EF%BC%81"><span class="nav-number">3.</span> <span class="nav-text">用户线程与内核线程(最令人困惑的！)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E6%A8%A1%E5%BC%8F-%E6%97%B6%E9%97%B4%E7%BA%BF%E4%BB%8E%E5%89%8D%E5%BE%80%E5%90%8E"><span class="nav-number">4.</span> <span class="nav-text">映射模式(时间线从前往后)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-Kernel-2-6-34-Process-amp-Thread-%E9%83%A8%E5%88%86"><span class="nav-number">5.</span> <span class="nav-text">Linux Kernel 2.6.34 Process &amp; Thread(部分)</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
