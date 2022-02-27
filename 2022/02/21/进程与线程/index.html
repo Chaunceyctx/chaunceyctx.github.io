@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://example.com/images/ProcessAndThread/978007-20170208113706760-1208301174.png">
 <meta property="og:image" content="http://example.com/images/ProcessAndThread/image-20220222101332154.png">
 <meta property="article:published_time" content="2022-02-21T11:18:03.000Z">
-<meta property="article:modified_time" content="2022-02-27T06:11:09.319Z">
+<meta property="article:modified_time" content="2022-02-27T06:14:25.777Z">
 <meta property="article:author" content="互联网搬砖民工">
 <meta property="article:tag" content="进程">
 <meta property="article:tag" content="线程">
@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-27 14:11:09" itemprop="dateModified" datetime="2022-02-27T14:11:09+08:00">2022-02-27</time>
+                <time title="修改时间：2022-02-27 14:14:25" itemprop="dateModified" datetime="2022-02-27T14:14:25+08:00">2022-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,7 +279,7 @@
 </li>
 <li><p>进程与线程的切换</p>
 <ul>
-<li><p>进程切换会引起上下文切换，其主要包含：寄存器内容的保存与恢复、段页表的切换（<strong>实际就是进程表项的切换</strong>）</p>
+<li><p>进程切换会引起上下文切换，其主要包含：寄存器内容的保存与恢复、段页表的切换（<strong>本质上就是进程表项的切换</strong>）</p>
 </li>
 <li><p>线程切换也会引起<em>Thread Context Switch</em>，其主要包含：寄存器内容的保存与恢复、堆栈的保存与恢复（当然此处说详细点还是属于用户线程的切换，<strong>本质上就是线程表项的切换</strong>）</p>
 <p>两者最主要的区别是在段页表的切换。一旦切换了段页表，那么进程地址空间(<em>Process Address Space</em>)就会发生变化。</p>
